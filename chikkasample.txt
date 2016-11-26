@@ -1,0 +1,13 @@
+import requests
+
+payload = {
+'message_type':'SEND',
+'mobile_number':'09068977719',
+'shortcode':'2929038537',
+'message_id':'XXXX',
+'message':'Hack Day Next Saturday!',
+'client_id':'XXXX',
+'secret_key': 'XXXX'
+}
+
+r = rquests.post('<insert WEBHOOK>, payload=payload)
