@@ -6,6 +6,9 @@ eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
 cap = cv2.VideoCapture(0)
 
+def transmitdata():
+    pass
+
 while True:
 
     ret, img = cap.read()
