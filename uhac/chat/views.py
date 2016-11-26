@@ -9,24 +9,35 @@ import requests
 import json
 from pprint import pprint
 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
 # Create your views here.
 # def index(request):
 #     return HttpResponse('<h1>Hello Test</h1>')
 
 # fj_user_id = '345435105819111'
 
+count_vec = CountVectorizer()
+normalized_text = TfidfTransformer()
 
 user_ids = {
-'Rommel': "1280262622045342"
+'Rommel': "1280262622045342",
 }
 
 training_Set = [
 'Hi',
+'Good Day',
 ]
 
-test_Set = [
+labels = [
 'Good Day, How can Romeo help you today?',
+'Nice to see you again',
 ]
+
+trained = count_vet.fit_transform(training_Set)
+normal = normalized_text.fit_transform(trained)
+clf = RandomForestClassifier(normal, labels)
 
 verify_token = '5244680129'
 page_access_token = 'EAAI7N9RGaL4BAFgt5zRVnffcuV9MuePhO731FX6LA5Y23w0GX7C4IduaUdJ382cgosZBPZANxnZBZALM2ZAYAJq1Yk8zVWDIkIsObhTCkb5sEY6WDSkX4sPp4qjQMHyhZBw3VZAXB2c5ZBcXuOyl3nTOzC2M2xRndEk0H04OMxq5ZCwZDZD'
@@ -62,3 +73,9 @@ def post_facebook_messages(fbid, received_messages):
 
     status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg, )
     pprint(status.json())
+
+
+def cam_saw_client(fbid, message_to_pass):
+    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token='+page_access_token
+    response_msg = json.dumps({"recipient"})
+    pass
