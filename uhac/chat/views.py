@@ -14,7 +14,19 @@ from pprint import pprint
 #     return HttpResponse('<h1>Hello Test</h1>')
 
 # fj_user_id = '345435105819111'
-mel_user_id = "1280262622045342"
+
+
+user_ids = {
+'Rommel': "1280262622045342"
+}
+
+training_Set = [
+'Hi',
+]
+
+test_Set = [
+'Good Day, How can Romeo help you today?',
+]
 
 verify_token = '5244680129'
 page_access_token = 'EAAI7N9RGaL4BAFgt5zRVnffcuV9MuePhO731FX6LA5Y23w0GX7C4IduaUdJ382cgosZBPZANxnZBZALM2ZAYAJq1Yk8zVWDIkIsObhTCkb5sEY6WDSkX4sPp4qjQMHyhZBw3VZAXB2c5ZBcXuOyl3nTOzC2M2xRndEk0H04OMxq5ZCwZDZD'

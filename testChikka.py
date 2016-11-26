@@ -2,7 +2,7 @@ import requests
 
 payload = {
 "message_type":"SEND",
-"mobile_number":"639071878493",
+"mobile_number":"639978946237",
 "shortcode": "292901343",
 "message_id":"34abc5de11209b",
 "message": "Hi Rommel",
