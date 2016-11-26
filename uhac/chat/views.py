@@ -13,6 +13,9 @@ from pprint import pprint
 # def index(request):
 #     return HttpResponse('<h1>Hello Test</h1>')
 
+# fj_user_id = '345435105819111'
+mel_user_id = "1280262622045342"
+
 verify_token = '5244680129'
 page_access_token = 'EAAI7N9RGaL4BAFgt5zRVnffcuV9MuePhO731FX6LA5Y23w0GX7C4IduaUdJ382cgosZBPZANxnZBZALM2ZAYAJq1Yk8zVWDIkIsObhTCkb5sEY6WDSkX4sPp4qjQMHyhZBw3VZAXB2c5ZBcXuOyl3nTOzC2M2xRndEk0H04OMxq5ZCwZDZD'
 
@@ -35,12 +38,13 @@ class index(generic.View):
                 if 'message' in message:
                     pprint(message)
                     post_facebook_messages(message['sender']['id'],message['message']['text'])
+                    # post_facebook_messages(mel_user_id,message['message']['text'])
 
         return HttpResponse()
 
 def post_facebook_messages(fbid, received_messages):
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token='+page_access_token
-    response_msg = json.dumps({"recipient": {"id":fbid}, "message":{"text":received_messages}})
+    response_msg = json.dumps({"recipient": {"id":fbid},"message":{"text":received_messages}})
     print('-----')
     print(response_msg)
 
