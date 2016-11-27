@@ -70,6 +70,7 @@ trained = count_vec.fit_transform(training_Set)
 normal = normalized_text.fit_transform(trained)
 clf = RandomForestClassifier().fit(normal, labels)
 
+x = TfidfTransformer()
 verify_token = '5244680129'
 page_access_token = 'EAAI7N9RGaL4BAFgt5zRVnffcuV9MuePhO731FX6LA5Y23w0GX7C4IduaUdJ382cgosZBPZANxnZBZALM2ZAYAJq1Yk8zVWDIkIsObhTCkb5sEY6WDSkX4sPp4qjQMHyhZBw3VZAXB2c5ZBcXuOyl3nTOzC2M2xRndEk0H04OMxq5ZCwZDZD'
 
@@ -94,10 +95,15 @@ class index(generic.View):
             for message in entry['messaging']:
                 if 'message' in message:
                     pprint(message)
+                    trained = count_vec.fit_transform(training_Set)
+                    normal = normalized_text.fit_transform(trained)
 
-                    answer = clf.predict(message['message']['text'])
-
-                    post_facebook_messages(message['sender']['id'],str(answer))
+                    clf = RandomForestClassifier().fit(normal, labels)
+                    docs_new = [message['message']['text']]
+                    X_new_counts = count_vec.transform(docs_new)
+                    X_new_tfidf = normalized_text.transform(X_new_counts)
+                    x = clf.predict(X_new_tfidf)
+                    post_facebook_messages(message['sender']['id'],str(x[0]))
 
                     # post_facebook_messages(message['sender']['id'],message['message']['text'])
                     # post_facebook_messages(mel_user_id,message['message']['text'])
@@ -118,8 +124,12 @@ class hardware(generic.View):
         message = hardmessage['body']
         pprint(message)
         if message == 'Rommel':
-            answer = clf.predict(str(labels[random.randint(0, len(labels)-1)]))
-            post_facebook_messages(user_ids['Francisc'], str(answer))
+            X_new_counts = count_vec.transform([training_Set[random.randint(0, len(training_Set)-1)]])
+
+            X_new_tfidf = normalized_text.transform(X_new_counts)
+            x = clf.predict(X_new_tfidf)
+            # answer = clf.predict()
+            post_facebook_messages(user_ids['Francisc'], str(x[0]))
         return HttpResponse()
 
 def randome(fbid, received_messages):
