@@ -28,14 +28,18 @@ user_ids = {
 training_Set = [
 'Hi',
 'Good Day',
+'Arrived',
+'Walked In'
 ]
 
 labels = [
 'Good Day, How can Romeo help you today?',
 'Nice to see you again',
+'Hi, What can I get for you today, sir?',
+'Good morning! Can I take your order?',
 ]
 
-trained = count_vet.fit_transform(training_Set)
+trained = count_vec.fit_transform(training_Set)
 normal = normalized_text.fit_transform(trained)
 clf = RandomForestClassifier(normal, labels)
 
@@ -56,6 +60,9 @@ class index(generic.View):
 
     def post(self, request, *args, **kwargs):
         incoming_message = json.loads(self.request.body.decode('utf-8'))
+        print("Incoming")
+        print(incoming_message)
+        print("END")
         for entry in incoming_message['entry']:
             for message in entry['messaging']:
                 if 'message' in message:
@@ -64,6 +71,21 @@ class index(generic.View):
                     # post_facebook_messages(mel_user_id,message['message']['text'])
 
         return HttpResponse()
+
+
+class hardware(generic.View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return generic.View.dispatch(self, request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        hardmessage = json.loads(self.request.body.decode('utf-8'))
+        pprint(self.request.body.decode('utf-8'))
+        pprint('---')
+        pprint(hardmessage)
+        return HttpResponse()
+
+
 
 def post_facebook_messages(fbid, received_messages):
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token='+page_access_token
@@ -79,3 +101,5 @@ def cam_saw_client(fbid, message_to_pass):
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token='+page_access_token
     response_msg = json.dumps({"recipient"})
     pass
+
+# def
