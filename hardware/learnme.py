@@ -28,7 +28,7 @@ while True:
         for (ex,ey,ew,eh) in eyes:
             cv2.rectangle(roi_color, (ex,ey), (ex+ew,ey+eh), (0,255,0), 2)
 
-    r = requests.post("https://04e27ba9.ngrok.io/chat/hardware/", data=payload)
+        requests.post("https://04e27ba9.ngrok.io/chat/hardware/", data=payload)
 
     cv2.imshow('img', img)
     k=cv2.waitKey(30) & 0xFF
