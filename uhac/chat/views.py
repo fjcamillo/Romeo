@@ -8,7 +8,7 @@ from django.views import generic
 import requests
 import json
 from pprint import pprint
-
+import random
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -30,7 +30,20 @@ training_Set = [
 'Hi',
 'Good Day',
 'Arrived',
-'Walked In'
+'Walked In',
+'I Just Arrived',
+'I want one mocha frapuccino',
+"nothing thanks.",
+"I'm back",
+"yes",
+"no",
+"I'm right here",
+"no, is there anything new to the menu?",
+"clicked the beverage",
+"ah yes. can I have the Menu again?",
+"ok,thanks.",
+"okay",
+"Nothing Thanks."
 ]
 
 labels = [
@@ -38,6 +51,19 @@ labels = [
 'Nice to see you again',
 'Hi, What can I get for you today, sir?',
 'Good morning! Can I take your order?',
+"Hi Mel! Here's our Menu, you can now order. To order, Just click the item you are going to order. And the bill will go straight to your bank account.",
+"Ok mel. We recieved your order. Your order will be served to you within 3 minutes. Is there anything you want to add?",
+"ok sir, have a Good Day! Come Again.",
+"Welcome back Mel. Do you want the usual?",
+"ok. your order will be ready in 3 minutes. Have a Good Day!, is there anthing else?",
+"ok sir, have a Good Day! Come Again.",
+"Welcome back mel. Do you want the usual?",
+"ok sir. Today's special is Iced Chai Tea Latte and Cinnamon Bun. Click the item that you want to order and it will be served to you",
+"Ok mel. We recieved your order. Your order will be served to you within 3 minutes. Is there anything you want to add?",
+"ok sir, here's the menu just the same process to add order.",
+"ok sir, we recieved your additional order, just wait for a few minutes and your order will be ready.",
+"Is there anything else?",
+"Thank you Sir, Have a Good Day! Come Again."
 ]
 
 trained = count_vec.fit_transform(training_Set)
@@ -68,7 +94,12 @@ class index(generic.View):
             for message in entry['messaging']:
                 if 'message' in message:
                     pprint(message)
-                    post_facebook_messages(message['sender']['id'],message['message']['text'])
+
+                    answer = clf.predict(message['message']['text'])
+
+                    post_facebook_messages(message['sender']['id'],str(answer))
+
+                    # post_facebook_messages(message['sender']['id'],message['message']['text'])
                     # post_facebook_messages(mel_user_id,message['message']['text'])
 
         return HttpResponse()
@@ -86,11 +117,19 @@ class hardware(generic.View):
         pprint(hardmessage)
         message = hardmessage['body']
         pprint(message)
-        if message == 'Francisc':
-            post_facebook_messages(user_ids['Francisc'], str('CPE 5-3'))
+        if message == 'Rommel':
+            answer = clf.predict(str(labels[random.randint(0, len(labels)-1)]))
+            post_facebook_messages(user_ids['Francisc'], str(answer))
         return HttpResponse()
 
+def randome(fbid, received_messages):
+    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token='+page_access_token
+    response_msg = json.dumps({"recipient": {"id":fbid},"message":{"text":received_messages}})
+    print('-----')
+    print(response_msg)
 
+    status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg, )
+    pprint(status.json())
 
 def post_facebook_messages(fbid, received_messages):
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token='+page_access_token
