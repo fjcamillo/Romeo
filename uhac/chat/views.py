@@ -68,7 +68,7 @@ labels = [
 
 trained = count_vec.fit_transform(training_Set)
 normal = normalized_text.fit_transform(trained)
-clf = RandomForestClassifier(normal, labels)
+clf = RandomForestClassifier().fit(normal, labels)
 
 verify_token = '5244680129'
 page_access_token = 'EAAI7N9RGaL4BAFgt5zRVnffcuV9MuePhO731FX6LA5Y23w0GX7C4IduaUdJ382cgosZBPZANxnZBZALM2ZAYAJq1Yk8zVWDIkIsObhTCkb5sEY6WDSkX4sPp4qjQMHyhZBw3VZAXB2c5ZBcXuOyl3nTOzC2M2xRndEk0H04OMxq5ZCwZDZD'
