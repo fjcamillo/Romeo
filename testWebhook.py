@@ -18,7 +18,7 @@ import json
 # payload = {u'entry':
 #         [{u'messaging': [{u'read': {u'seq': 413, u'watermark': 1480197939810}, u'timestamp': 1480197940174, u'recipient': {u'id': u'345435105819111'}, u'sender': {u'id': u'1173757599378036'}}], u'id': u'345435105819111', u'time': 1480197941320}], u'object': u'page'}
 
-payload = {'body': 'It worked'}
+payload = {'body': 'Francisc'}
 payload = json.dumps(payload)
 
 # {u'message': {u'app_id': 628060924045502,

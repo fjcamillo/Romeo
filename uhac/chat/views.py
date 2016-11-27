@@ -23,6 +23,7 @@ normalized_text = TfidfTransformer()
 
 user_ids = {
 'Rommel': "1280262622045342",
+'Francisc':"1173757599378036",
 }
 
 training_Set = [
@@ -83,6 +84,10 @@ class hardware(generic.View):
         pprint(self.request.body.decode('utf-8'))
         pprint('---')
         pprint(hardmessage)
+        message = hardmessage['body']
+        pprint(message)
+        if message == 'Francisc':
+            post_facebook_messages(user_ids['Francisc'], str('CPE 5-3'))
         return HttpResponse()
 
 
