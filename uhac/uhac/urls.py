@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-
+from . import settings
 import chat
 import home
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^chat/', include('chat.urls')),
-    url(r'^$', include('home.urls'))
+    url(r'^$', include('home.urls')),
+    # url(r'^static/(?P.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 ]
